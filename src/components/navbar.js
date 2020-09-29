@@ -8,24 +8,22 @@ import AvatarMenu from "./avatarMenu";
 
 // import MenuIcon from "@material-ui/icons/Menu";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+// }));
 
 export default function Navbar() {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <AvatarMenu />
-          <AddProject />
-          <Searchbar />
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <AvatarMenu />
+        <AddProject />
+        <Searchbar />
+      </Toolbar>
+    </AppBar>
   );
 }

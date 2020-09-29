@@ -8,12 +8,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     marginLeft: "10px",
     flexGrow: 1,
@@ -24,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AvatarMenu(params) {
+export default function AvatarMenu() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 

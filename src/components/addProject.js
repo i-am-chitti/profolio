@@ -33,7 +33,6 @@ export default function FormDialog() {
         <DialogTitle id="form-dialog-title">Add Project</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Title"

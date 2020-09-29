@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DisplayProject from "./displayProjects";
 import Navbar from "./navbar";
+import Login from "./login";
 import Profile from "./userProfile";
 class Main extends Component {
   constructor(props) {
@@ -13,6 +14,9 @@ class Main extends Component {
       <Router>
         <Navbar />
         <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
           <Route path="/profile">
             <Profile />
           </Route>
