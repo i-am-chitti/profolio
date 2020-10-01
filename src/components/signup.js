@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Signup() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
 

@@ -3,9 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  /* background: #212121; */
-}
+
 .navLinks {
   color: #212121;
 }
@@ -38,6 +36,7 @@ body {
 }
 
 #leader {
+  border-radius: 1%;
   -webkit-transform: translateY(-120px);
   transform: translateY(-120px);
   max-width: 900px;

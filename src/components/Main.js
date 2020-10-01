@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DisplayProject from "./displayProjects";
 import Navbar from "./navbar";
 import Login from "./login";
+import Signup from "./signup";
+
 import Profile from "./userProfile";
 class Main extends Component {
   constructor(props) {

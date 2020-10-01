@@ -55,8 +55,9 @@ export default function AvatarMenu() {
             Projects
           </MenuItem>
         </Link>
-
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <Link to="/login" className="navLinks">
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Link>
       </Menu>
       <Typography className={classes.title} variant="h6" noWrap>
         {user.name}

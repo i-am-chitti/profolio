@@ -12,6 +12,7 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   root: {
@@ -80,6 +81,9 @@ export default function Project(props) {
           >
             Go Live
           </Button>
+          <IconButton aria-label="delete" style={{ marginLeft: "auto" }}>
+            <DeleteIcon />
+          </IconButton>
         </CardActions>
       </Card>
 
