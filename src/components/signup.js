@@ -6,6 +6,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import FormControl from "@material-ui/core/FormControl";
+import clsx from "clsx";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,41 +26,75 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Signup() {
+export default function Login() {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(true);
+  const [values, setValues] = React.useState({
+    userName: "",
+    password: "",
+    showPassword: false,
+  });
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    console.log(values);
   };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <Box mt={4}>
-      <Container maxWidth="sm">
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="userName" label="User name" variant="outlined" />
-          <TextField
-            id="password"
-            label="Password"
-            type="password"
-            autoComplete="current-password"
-            variant="outlined"
+    <Container maxWidth="sm">
+      <form className={classes.root} noValidate autoComplete="off">
+        <TextField
+          id="userName"
+          onChange={handleChange("userName")}
+          label="User name"
+          variant="outlined"
+        />
+        <FormControl
+          className={clsx(classes.margin, classes.textField)}
+          variant="outlined"
+        >
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={values.showPassword ? "text" : "password"}
+            value={values.password}
+            onChange={handleChange("password")}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onChange={handleChange("showPassword")}
+                  edge="end"
+                >
+                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
           />
-          <Box ml={3}>
-            <FormControlLabel
-              value="top"
-              control={<Checkbox color="primary" />}
-              label="keep me logged in."
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginLeft: "17%" }}
-            >
-              Login
-            </Button>
-          </Box>
-        </form>
-      </Container>
-    </Box>
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginLeft: "17%" }}
+        >
+          Sign Up
+        </Button>
+        <Box mt={1}>
+          <Link to="/login">Already have an Account</Link>
+        </Box>
+      </form>
+    </Container>
   );
 }

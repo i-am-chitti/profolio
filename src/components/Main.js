@@ -19,6 +19,9 @@ class Main extends Component {
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
           <Route path="/profile">
             <Profile />
           </Route>
