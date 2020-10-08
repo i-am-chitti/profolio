@@ -7,6 +7,10 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "../util/firebaseConnectivity";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: "10px",
@@ -29,6 +33,15 @@ export default function AvatarMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = () => {
+    firebase.auth().signOut().then(function() {
+      window.location = "/login";
+    }).catch(function(error) {
+      alert("error in logging out");
+    });
+  };
+
   return (
     <>
       <Avatar
@@ -55,9 +68,7 @@ export default function AvatarMenu() {
             Projects
           </MenuItem>
         </Link>
-        <Link to="/login" className="navLinks">
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Link>
+          <MenuItem onClick={() => handleLogOut()}>Logout</MenuItem>
       </Menu>
       <Typography className={classes.title} variant="h6" noWrap>
         {user.name}

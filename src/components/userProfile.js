@@ -5,6 +5,7 @@ import "../App.css";
 class Profile extends Component {
 	constructor(props) {
 		super(props);
+		console.log(this.props.match.params.username);
 		this.state = {};
 	}
 	render() {

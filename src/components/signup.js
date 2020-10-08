@@ -16,6 +16,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "../util/firebaseConnectivity";
+import "firebase/database";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -27,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+
+  function writeUserData(user) {
+    firebase.database().ref('users/' + user.uid).set({
+      email: user.email,
+    });
+  }
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      writeUserData(user);
+      window.location="/profile";
+    } else {
+      // No user is signed in.
+    }
+  });
+
   const classes = useStyles();
   const [values, setValues] = React.useState({
     userName: "",
@@ -46,6 +67,17 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSubmit = () => {
+    const email = values.userName;
+    const password = values.password;
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  }
 
   return (
     <Container maxWidth="sm">
@@ -88,6 +120,7 @@ export default function Login() {
           variant="contained"
           color="primary"
           style={{ marginLeft: "17%" }}
+          onClick={() => handleSubmit()}
         >
           Sign Up
         </Button>

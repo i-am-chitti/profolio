@@ -16,18 +16,10 @@ class Main extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/">
-            <DisplayProject />
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/:username/projects" component={DisplayProject} />
+          <Route path="/:username" component={Profile} />
         </Switch>
       </Router>
     );
