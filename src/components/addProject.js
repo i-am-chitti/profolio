@@ -76,7 +76,9 @@ export default function FormDialog() {
         description: values.description
       };
       //push static data into dB
-      var projectKey = firebase.database().ref('users/'+currentUser.uid+'/projects').push(postData).key;
+      var projectKey = firebase.database().ref('users/'+currentUser.uid+'/projects').push().key;
+      postData.id = projectKey;
+      projectKey = firebase.database().ref('users/'+currentUser.uid+'/projects').push(postData).key;
 
       values.pics.forEach((pic) => {
         //upload images to firebase storage

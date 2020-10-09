@@ -4,30 +4,33 @@ import { data } from ".././shared/data.js";
 import Project from "./project";
 import BackToTop from "./scrollTop";
 import Toolbar from "@material-ui/core/Toolbar";
+import CircularIndeterminate from './circularProgress';
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../util/firebaseConnectivity";
 import "firebase/database";
 
-// import Slides from "./slides";
-
 class DisplayProjects extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // selectedProject: null,
+      projectData: null
     };
+  }
 
-    this.projectData=null;
+  componentDidMount() {
+    this.getProjectData((datas) => this.changeState(datas));
+  }
 
-    this.getProjectData(function(projectData) {
-      console.log(projectData); //working
-      //how to access this.projectData here
-    })
-
-    console.log(this.projectData); //still null
-
+  changeState(datas) {
+    console.log(datas);
+    var projectDatas=Object.values(datas);
+    projectDatas.map(oneData => {
+      oneData.images = Object.values(oneData.images);
+    });
+    this.setState({projectData: projectDatas});
   }
 
   getProjectData = (callback) => {
@@ -48,6 +51,10 @@ class DisplayProjects extends Component {
 
     //request data from dB and wait till finished fetching or no render until complete data is fetched.
 
+    if(!this.state.projectData) {
+      return <CircularIndeterminate />;
+    }
+
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -58,7 +65,7 @@ class DisplayProjects extends Component {
             spacing={2}
             style={{ width: "100%" }}
           >
-            {data.map((project) => (
+            {this.state.projectData.map((project) => (
               <Grid key={project.id} item>
                 <Project project={project} />
                 {/* <Slides project={selectedProject} /> */}
