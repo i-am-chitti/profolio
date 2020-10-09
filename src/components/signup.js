@@ -32,17 +32,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-
   function writeUserData(user) {
-    firebase.database().ref('users/' + user.uid).set({
-      email: user.email,
-    });
+    firebase
+      .database()
+      .ref("users/" + user.uid)
+      .set({
+        email: user.email,
+      });
   }
 
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       writeUserData(user);
-      window.location="/profile";
+      window.location = "/profile";
     } else {
       // No user is signed in.
     }
@@ -71,13 +73,16 @@ export default function Login() {
   const handleSubmit = () => {
     const email = values.userName;
     const password = values.password;
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-    });
-  }
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
+  };
 
   return (
     <Container maxWidth="sm">
@@ -125,7 +130,7 @@ export default function Login() {
           Sign Up
         </Button>
         <Box mt={1}>
-          <Link to="/login">Already have an Account</Link>
+          <Link to="/">Already have an Account</Link>
         </Box>
       </form>
     </Container>

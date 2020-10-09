@@ -35,11 +35,15 @@ export default function AvatarMenu() {
   };
 
   const handleLogOut = () => {
-    firebase.auth().signOut().then(function() {
-      window.location = "/login";
-    }).catch(function(error) {
-      alert("error in logging out");
-    });
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        window.location = "/";
+      })
+      .catch(function (error) {
+        alert("error in logging out");
+      });
   };
 
   return (
@@ -63,12 +67,12 @@ export default function AvatarMenu() {
             My account
           </MenuItem>
         </Link>
-        <Link to="/" className="navLinks">
+        <Link to="/:username/projects" className="navLinks">
           <MenuItem onClick={handleClose} className="navLinks">
             Projects
           </MenuItem>
         </Link>
-          <MenuItem onClick={() => handleLogOut()}>Logout</MenuItem>
+        <MenuItem onClick={() => handleLogOut()}>Logout</MenuItem>
       </Menu>
       <Typography className={classes.title} variant="h6" noWrap>
         {user.name}
