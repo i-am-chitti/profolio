@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
  
-export default function SignIn() {
+export default function Login() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       window.location = "/" + user.uid;

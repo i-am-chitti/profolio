@@ -56,6 +56,18 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const [values, setValues] = React.useState({
+    uname:"",
+    email: "",
+    password: "",
+    checked: false,
+  });
+
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    console.log(values);
+  };
   return (
     <>
     <Container component="main" maxWidth="xs" style={{minHeight:"80vh"}}>
@@ -71,6 +83,7 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
+                onChange={handleChange("uname")}
                 autoComplete="uname"
                 name="userName"
                 variant="outlined"
@@ -84,6 +97,7 @@ export default function SignUp() {
            
             <Grid item xs={12}>
               <TextField
+                onChange={handleChange("email")}
                 variant="outlined"
                 required
                 fullWidth
@@ -95,6 +109,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={handleChange("password")}
                 variant="outlined"
                 required
                 fullWidth

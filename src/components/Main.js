@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DisplayProject from "./displayProjects";
 import Navbar from "./navbar";
 import Login from "./login";
-import Signup from "./signup";
+import SignUp from "./signup";
 
 import Profile from "./userProfile";
 class Main extends Component {
@@ -16,7 +16,7 @@ class Main extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/signup" component={Signup} />
+          <Route path="/signup" component={SignUp} />
           <Route path="/:username/projects" component={DisplayProject} />
           <Route path="/:username" component={Profile} />
           <Route path="/" component={Login} />
