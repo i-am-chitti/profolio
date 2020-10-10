@@ -1,49 +1,61 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
-import FormControl from "@material-ui/core/FormControl";
-import clsx from "clsx";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import {Container , Box} from '@material-ui/core';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+import Footer from "./Footer";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../util/firebaseConnectivity";
 
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(3),
-      width: "25ch",
-      color: "white",
-    },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
   },
 }));
 
-export default function Login() {
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-     window.location="/"+user.uid; 
-    }
-    else console.log("no user");
+ 
+export default function SignIn() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      window.location = "/" + user.uid;
+    } else console.log("no user");
   });
 
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    userName: "",
+    email: "",
     password: "",
-    showPassword: false,
     checked: false,
   });
 
@@ -52,84 +64,92 @@ export default function Login() {
     console.log(values);
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  
   const handleSubmit = () => {
-    const email = values.userName;
+    const email = values.email;
     const password = values.password;
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-    });
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
   };
-
-  return (
-    <Box mt={4}>
-      <Container maxWidth="sm">
-        <form className={classes.root} noValidate autoComplete="off">
+  
+   return (
+<>
+    <Container component="main" maxWidth="xs" style={{minHeight:"80vh"}}>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate>
           <TextField
-            id="userName"
-            onChange={handleChange("userName")}
-            label="User name"
+            onChange={handleChange("email")}
             variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onMouseDown={handleMouseDownPassword}
           />
-          <FormControl
-            className={clsx(classes.margin, classes.textField)}
+          <TextField
+            onChange={handleChange("password")}
             variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => handleSubmit()}
+            className={classes.submit}
           >
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
-              onChange={handleChange("password")}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onChange={handleChange("showPassword")}
-                    edge="end"
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              labelWidth={70}
-            />
-          </FormControl>
-          <Box ml={3}>
-            <FormControlLabel
-              value="top"
-              onChange={handleChange("checked")}
-              control={<Checkbox color="primary" />}
-              label="keep me logged in."
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginLeft: "17%" }}
-              onClick={() => handleSubmit()}
-            >
-              Login
-            </Button>
-          </Box>
-          <Box ml={3} mt={1}>
-            <Link to="/signup">Create New Account</Link>
-          </Box>
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
-      </Container>
-    </Box>
+      </div>
+    </Container>
+    <Footer/>
+
+</>
   );
 }

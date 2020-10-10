@@ -26,15 +26,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FormDialog() {
-
   const [open, setOpen] = React.useState(false);
 
   var currentUser;
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-      console.log(user.email+" is logged in");
-      currentUser=user;
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log(user.email + " is logged in");
+      currentUser = user;
     }
   });
 
@@ -51,7 +50,7 @@ export default function FormDialog() {
     sourceLink: "",
     liveLink: "",
     description: "",
-    pics: []
+    pics: [],
   });
 
   const handleChange = (prop) => (event) => {
@@ -65,44 +64,64 @@ export default function FormDialog() {
   };
 
   const handleSubmit = () => {
-    if(currentUser) console.log(currentUser.uid);
-    if(!values.pics.length) alert("Add at least one pic");
+    if (currentUser) console.log(currentUser.uid);
+    if (!values.pics.length) alert("Add at least one pic");
     else {
-      
       var postData = {
         name: values.title,
         link: values.sourceLink,
         live: values.liveLink,
-        description: values.description
+        description: values.description,
       };
       //push static data into dB
-      var projectKey = firebase.database().ref('users/'+currentUser.uid+'/projects').push().key;
+      var projectKey = firebase
+        .database()
+        .ref("users/" + currentUser.uid + "/projects")
+        .push().key;
       postData.id = projectKey;
-      projectKey = firebase.database().ref('users/'+currentUser.uid+'/projects').push(postData).key;
+      projectKey = firebase
+        .database()
+        .ref("users/" + currentUser.uid + "/projects")
+        .push(postData).key;
 
       values.pics.forEach((pic) => {
         //upload images to firebase storage
-        var uploadTask = firebase.storage().ref('images/'+currentUser.uid+'/'+pic.name).put(pic);
-        uploadTask.on('state_changed', function(snapshot) {
-          //function to track images upload
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          //progress scale for a progress bar
-        },
-        function(error) {
-          //if any error occured, display
-          alert(error.code);
-        },
-        function() {
-          console.log("getting download link");
-          //getting download link
-          uploadTask.snapshot.ref.getDownloadURL().then(function(url) {
-            firebase.database().ref('users/'+currentUser.uid+'/projects/'+projectKey+'/images').push(url);
-          });
-        });
+        var uploadTask = firebase
+          .storage()
+          .ref("images/" + currentUser.uid + "/" + pic.name)
+          .put(pic);
+        uploadTask.on(
+          "state_changed",
+          function (snapshot) {
+            //function to track images upload
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            //progress scale for a progress bar
+          },
+          function (error) {
+            //if any error occured, display
+            alert(error.code);
+          },
+          function () {
+            console.log("getting download link");
+            //getting download link
+            uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
+              firebase
+                .database()
+                .ref(
+                  "users/" +
+                    currentUser.uid +
+                    "/projects/" +
+                    projectKey +
+                    "/images"
+                )
+                .push(url);
+            });
+          }
+        );
       });
-      
     }
-  }
+  };
 
   return (
     <div>
@@ -143,16 +162,15 @@ export default function FormDialog() {
           <TextField
             id="description"
             label="Description"
-            placeholder="Placeholder"
             onChange={handleChange("description")}
             fullWidth
             multiline
             style={{ marginBottom: "15px" }}
           />
           <DropzoneArea
-           acceptedFiles={['image/*']}
-           id="projectScreenshots"
-           onChange={(file) => handleDropBoxChange(file)}
+            acceptedFiles={["image/*"]}
+            id="projectScreenshots"
+            onChange={(file) => handleDropBoxChange(file)}
           />
         </DialogContent>
         <DialogActions>

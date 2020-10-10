@@ -9,16 +9,17 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import GridList from "@material-ui/core/GridList";
+import CardHeader from '@material-ui/core/CardHeader';
 import GridListTile from "@material-ui/core/GridListTile";
-import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import CloseIcon from '@material-ui/icons/Close';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    // background: "#424242",
-    // color: "#eeeeee",
+  
   },
   media: {
     height: 140,
@@ -40,17 +41,24 @@ export default function Project(props) {
   return (
     <div>
       <Card className={classes.root} style={{ margin: "15px 5px" }}>
+      <CardHeader
+        action={
+          <IconButton aria-label="settings">
+            <CreateIcon />
+          </IconButton>
+        }
+        title={props.project.name}
+      />
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
             className={classes.media}
             image={props.project.images[0]}
             title={props.project.name}
             style={{ minHeight: "300px" }}
-          />
+          />        
+        </CardActionArea>
+
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {props.project.name}
-            </Typography>
             <Typography
               variant="body2"
               component="p"
@@ -63,7 +71,6 @@ export default function Project(props) {
               {props.project.description}
             </Typography>
           </CardContent>
-        </CardActionArea>
         <CardActions>
           <Button
             color="primary"
@@ -97,19 +104,13 @@ export default function Project(props) {
         }}
       >
         <IconButton
-          aria-label="search"
-          color="inherit"
           onClick={handleClose}
           style={{
-            width: "47px",
-            position: "absolute",
-            right: "20px",
-            zIndex: "100",
-            transform: "rotate(45deg)",
-            opacity: "0.7",
+            width: "52px",
+            marginLeft: "auto"
           }}
         >
-          <Icon>add</Icon>
+          <CloseIcon />
         </IconButton>
         <GridList cellHeight={200} spacing={1} className={classes.gridList}>
           {props.project.images.map((tile) => (

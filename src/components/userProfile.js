@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { user } from "../shared/user";
 import "../App.css";
+import CreateIcon from '@material-ui/icons/Create';
 
 class Profile extends Component {
 	constructor(props) {

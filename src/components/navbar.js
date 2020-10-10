@@ -14,7 +14,7 @@ import AvatarMenu from "./avatarMenu";
 //   },
 // }));
 
-export default function Navbar() {
+export default function Navbar({loggedIn , profile , projects}) {
   // const classes = useStyles();
 
   return (
