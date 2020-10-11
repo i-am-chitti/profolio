@@ -21,8 +21,7 @@ class Main extends Component {
           <Route path="/:username" component={Profile} />
           <Route path="/" component={Login} />
         </Switch>
-        </Router>
-
+      </Router>
     );
   }
 }

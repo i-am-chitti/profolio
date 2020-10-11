@@ -14,16 +14,19 @@ import AvatarMenu from "./avatarMenu";
 //   },
 // }));
 
-export default function Navbar({loggedIn , profile , projects}) {
+export default function Navbar({ loggedIn, profile, projects }) {
   // const classes = useStyles();
-
-  return (
-    <AppBar position="static">
-      <Toolbar>
-        <AvatarMenu />
-        <AddProject />
-        <Searchbar />
-      </Toolbar>
-    </AppBar>
-  );
+  if (loggedIn) {
+    return (
+      <AppBar position="static">
+        <Toolbar>
+          <AvatarMenu />
+          <AddProject />
+          <Searchbar />
+        </Toolbar>
+      </AppBar>
+    );
+  } else {
+    return <></>;
+  }
 }

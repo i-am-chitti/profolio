@@ -9,17 +9,16 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import GridList from "@material-ui/core/GridList";
-import CardHeader from '@material-ui/core/CardHeader';
+import CardHeader from "@material-ui/core/CardHeader";
 import GridListTile from "@material-ui/core/GridListTile";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import CloseIcon from '@material-ui/icons/Close';
-import CreateIcon from '@material-ui/icons/Create';
+import CloseIcon from "@material-ui/icons/Close";
+import CreateIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-  
   },
   media: {
     height: 140,
@@ -41,36 +40,36 @@ export default function Project(props) {
   return (
     <div>
       <Card className={classes.root} style={{ margin: "15px 5px" }}>
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <CreateIcon />
-          </IconButton>
-        }
-        title={props.project.name}
-      />
+        <CardHeader
+          action={
+            <IconButton aria-label="settings">
+              <CreateIcon />
+            </IconButton>
+          }
+          title={props.project.name}
+        />
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
             className={classes.media}
             image={props.project.images[0]}
             title={props.project.name}
             style={{ minHeight: "300px" }}
-          />        
+          />
         </CardActionArea>
 
-          <CardContent>
-            <Typography
-              variant="body2"
-              component="p"
-              style={{
-                height: "80px",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-              }}
-            >
-              {props.project.description}
-            </Typography>
-          </CardContent>
+        <CardContent>
+          <Typography
+            variant="body2"
+            component="p"
+            style={{
+              height: "80px",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
+            {props.project.description}
+          </Typography>
+        </CardContent>
         <CardActions>
           <Button
             color="primary"
@@ -107,7 +106,7 @@ export default function Project(props) {
           onClick={handleClose}
           style={{
             width: "52px",
-            marginLeft: "auto"
+            marginLeft: "auto",
           }}
         >
           <CloseIcon />
